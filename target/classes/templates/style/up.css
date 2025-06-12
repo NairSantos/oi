@@ -1,0 +1,263 @@
+/* Estilos gerais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f7fa;
+    color: #333;
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Card principal */
+.card {
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.card-header {
+    background-color: #79a8a8;
+    color: white;
+    padding: 15px 30px;
+    border-bottom: none;
+}
+
+.card-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.card-body {
+    padding: 30px;
+}
+
+/* Alertas */
+.alert {
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+/* Seção de instruções */
+.instructions {
+    margin-bottom: 30px;
+}
+
+.instructions h5 {
+    color: #97c0c1;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eaecef;
+    padding-bottom: 8px;
+}
+
+.instructions-list {
+    list-style: none;
+    padding: 0;
+}
+
+.instructions-list li {
+    padding: 10px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    border-bottom: 1px solid #f0f2f5;
+}
+
+.instructions-list li:last-child {
+    border-bottom: none;
+}
+
+.icon {
+    margin-top: 2px;
+    font-size: 16px;
+}
+
+.icon.success {
+    color: #28a745;
+}
+
+.icon.info {
+    color: #17a2b8;
+}
+
+/* Formulário */
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 15px;
+    border: 2px solid #e1e5e9;
+    border-radius: 50px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background-color: #fafbfc;
+}
+
+.form-control:focus {
+    border-color: #97c0c1;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(151, 192, 193, 0.1);
+    background-color: white;
+}
+
+.form-text {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Botão */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.btn-primary {
+    background-color: #79a8a8;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #97c0c1;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(121, 168, 168, 0.3);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Ícones do Lucide */
+[data-lucide] {
+    width: 16px;
+    height: 16px;
+}
+
+.card-title [data-lucide] {
+    width: 24px;
+    height: 24px;
+}
+
+.btn [data-lucide] {
+    width: 18px;
+    height: 18px;
+}
+
+.icon.success {
+    color: #79a8a8;
+}
+
+.icon.info {
+    color: #17a2b8;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .card-header {
+        padding: 20px;
+    }
+    
+    .card-title {
+        font-size: 24px;
+    }
+    
+    .card-body {
+        padding: 20px;
+    }
+    
+    .instructions-list li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .form-control {
+        font-size: 16px; /* Previne zoom no iOS */
+    }
+    
+    .btn {
+        padding: 12px 25px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .card-header {
+        padding: 15px;
+    }
+    
+    .card-title {
+        font-size: 20px;
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .card-body {
+        padding: 15px;
+    }
+}

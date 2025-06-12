@@ -1,0 +1,158 @@
+/* CSS DAS TABELAS GERAL E DETALHADA*/
+
+/* Estilos gerais */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+  --row-alt-background: #dfecec;
+}
+
+body {
+  background-color: #f5f7fa;
+  color: #333;
+  line-height: 1.0;
+}
+.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+/* Barra de navegação */
+.topnav {
+  background-color: #79a8a8;
+  overflow: hidden;
+  border-radius: 50px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.topnav a {
+  float: left;
+  color: white;
+  text-align: center;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+.topnav a.active {
+  background-color: #97c0c1;
+}
+/* Estilos para os containers das tabelas */
+.tabela-container {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 40px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+.titulo-tabela {
+  color: #97c0c1;
+  margin-bottom: 20px;
+  font-size: 22px;
+  border-bottom: 2px solid #eaecef;
+  padding-bottom: 10px;
+}
+/* Estilo para a barra de pesquisa */
+.linha-titulo-pesquisa {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.barra-de-pesquisa input {
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 50px;
+  width: 400px;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+.barra-de-pesquisa input:focus {
+  border-color: #97c0c1;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 80, 197, 0.2);
+}
+.barra-de-pesquisa input::placeholder {
+  color: #aaaaaa;
+}
+/* Estilos para as tabelas */
+.dataframe {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 1px;
+  overflow: hidden;
+}
+.dataframe thead {
+  background-color: #f0f2f5;
+}
+.dataframe th {
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 600;
+  color: #444;
+  border-bottom: 1px solid #ddd;
+  white-space: nowrap;
+}
+.dataframe td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #ddd;
+}
+.dataframe tbody tr:hover {
+  background-color: #6fa8aa6f;
+}
+/* Linhas alternadas */
+tr:nth-child(even) td,
+#comparado tr:nth-child(even) td {
+  background-color: var(--row-alt-background);
+}
+
+/* Destacar valores com diferenças */
+.destaque {
+  background-color: #ff5252;
+  color: white;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 0px;
+}
+/* Para células com valor zero */
+.dataframe td:contains("0.0") {
+  color: #cac9c9;
+}
+/* Container com scroll horizontal para tabela detalhada */
+.tabela-scroll {
+  overflow-x: auto;
+  max-width: 100%;
+}
+/* Responsividade */
+@media (max-width: 768px) {
+  .linha-titulo-pesquisa {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .titulo-tabela {
+    margin-bottom: 15px;
+  }
+
+  .barra-de-pesquisa {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .barra-de-pesquisa input {
+    width: 100%;
+  }
+
+  .dataframe th,
+  .dataframe td {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+}
+
