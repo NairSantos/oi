@@ -1,527 +1,395 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./style/style_um.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
     <title>Resultados - Equipe IBM Bradesco</title>
-    <style>
-      /* CSS DAS TABELAS GERAL E DETALHADA*/
-
-      /* Estilos gerais */
-      /* CSS DAS TABELAS GERAL E DETALHADA*/
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      }
-
-      :root {
-        --row-alt-background: #dfecec;
-      }
-
-      body {
-        background-color: #f5f7fa;
-        color: #333;
-        line-height: 1;
-      }
-
-      .wrapper {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
-      }
-
-      /* Barra de navegação */
-      .topnav {
-        background-color: #79a8a8;
-        overflow: hidden;
-        border-radius: 50px;
-        margin-bottom: 30px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      }
-
-      .topnav a {
-        float: left;
-        color: white;
-        text-align: center;
-        padding: 10px 20px;
-        text-decoration: none;
-        font-size: 16px;
-        font-weight: bold;
-        letter-spacing: 1px;
-      }
-
-      .topnav a.active {
-        background-color: #97c0c1;
-      }
-
-      .topnav a:hover {
-        background-color: #97c0c1;
-      }
-
-      /* Estilos para os containers das tabelas */
-      .tabela-container {
-        background-color: #fff;
-        border-radius: 20px;
-        padding: 20px;
-        margin-bottom: 40px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-      }
-
-      .titulo-tabela {
-        color: #97c0c1;
-        margin-bottom: 20px;
-        font-size: 22px;
-        border-bottom: 2px solid #eaecef;
-        padding-bottom: 10px;
-      }
-
-      /* Estilo para a barra de pesquisa */
-      .linha-titulo-pesquisa {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
-        flex-wrap: wrap;
-        gap: 15px;
-      }
-
-      .barra-de-pesquisa input {
-        padding: 8px 10px;
-        border: 1px solid #ddd;
-        border-radius: 50px;
-        width: 400px;
-        max-width: 100%;
-        font-size: 14px;
-        transition: all 0.3s;
-      }
-
-      .barra-de-pesquisa input:focus {
-        border-color: #97c0c1;
-        outline: none;
-        box-shadow: 0 0 0 2px rgba(151, 192, 193, 0.2);
-      }
-
-      .barra-de-pesquisa input::placeholder {
-        color: #aaaaaa;
-      }
-
-      /* Estilos para as tabelas */
-      .dataframe {
-        width: 100%;
-        border-collapse: collapse;
-        border-radius: 1px;
-        overflow: hidden;
-        font-size: 14px;
-      }
-
-      .dataframe thead {
-        background-color: #f0f2f5;
-      }
-
-      .dataframe th {
-        padding: 12px 15px;
-        text-align: left;
-        font-weight: 600;
-        color: #444;
-        border-bottom: 1px solid #ddd;
-        white-space: nowrap;
-        font-size: 13px;
-      }
-
-      .dataframe td {
-        padding: 10px 15px;
-        border-bottom: 1px solid #ddd;
-        word-wrap: break-word;
-      }
-
-      .dataframe tbody tr:hover {
-        background-color: #6fa8aa6f;
-      }
-
-      /* Linhas alternadas */
-      tr:nth-child(even) td,
-      #comparado tr:nth-child(even) td {
-        background-color: var(--row-alt-background);
-      }
-
-      /* Destacar valores com diferenças */
-      .destaque {
-        background-color: #ff5252 !important;
-        color: white;
-        font-weight: bold;
-        padding: 5px 10px;
-        border-radius: 0px;
-      }
-
-      /* Para células com valor zero */
-      .dataframe td:contains("0.0") {
-        color: #cac9c9;
-      }
-
-      /* Container com scroll horizontal para tabela detalhada */
-      .tabela-scroll {
-        overflow-x: auto;
-        max-width: 100%;
-        -webkit-overflow-scrolling: touch;
-      }
-
-      /* Contador de resultados */
-      #contador-resultados {
-        margin-bottom: 10px;
-        font-size: 14px;
-        color: #666;
-        font-weight: 500;
-      }
-
-      /* Responsividade para tablets */
-      @media (max-width: 1024px) {
-        .wrapper {
-          padding: 15px;
-        }
-
-        .tabela-container {
-          padding: 15px;
-          margin-bottom: 30px;
-        }
-
-        .titulo-tabela {
-          font-size: 20px;
-        }
-
-        .barra-de-pesquisa input {
-          width: 350px;
-        }
-      }
-
-      /* Responsividade para dispositivos móveis */
-      @media (max-width: 768px) {
-        .wrapper {
-          padding: 10px;
-        }
-
-        .topnav {
-          border-radius: 15px;
-        }
-
-        .topnav a {
-          float: none;
-          display: block;
-          text-align: left;
-          padding: 12px 20px;
-          font-size: 14px;
-        }
-
-        .tabela-container {
-          padding: 15px;
-          margin-bottom: 25px;
-          border-radius: 15px;
-        }
-
-        .linha-titulo-pesquisa {
-          flex-direction: column;
-          align-items: stretch;
-          text-align: center;
-        }
-
-        .titulo-tabela {
-          margin-bottom: 15px;
-          font-size: 18px;
-          text-align: center;
-        }
-
-        .barra-de-pesquisa {
-          width: 100%;
-          margin-top: 10px;
-        }
-
-        .barra-de-pesquisa input {
-          width: 100%;
-          font-size: 16px; /* Previne zoom no iOS */
-          padding: 10px 15px;
-        }
-
-        .dataframe {
-          font-size: 12px;
-        }
-
-        .dataframe th,
-        .dataframe td {
-          padding: 8px 6px;
-          font-size: 11px;
-        }
-
-        .dataframe th {
-          font-size: 12px;
-          font-weight: 700;
-        }
-
-        /* Tornar algumas colunas mais estreitas em mobile */
-        .dataframe th:not(:first-child):not(:nth-child(2)),
-        .dataframe td:not(:first-child):not(:nth-child(2)) {
-          min-width: 60px;
-          max-width: 80px;
-        }
-
-        .destaque {
-          padding: 3px 6px;
-          font-size: 11px;
-        }
-
-        #contador-resultados {
-          text-align: center;
-          margin-bottom: 15px;
-          font-size: 13px;
-        }
-      }
-
-      /* Responsividade para telas muito pequenas */
-      @media (max-width: 480px) {
-        .wrapper {
-          padding: 8px;
-        }
-
-        .topnav {
-          padding: 0;
-          margin-bottom: 20px;
-        }
-
-        .topnav a {
-          padding: 10px 15px;
-          font-size: 13px;
-        }
-
-        .tabela-container {
-          padding: 12px;
-          margin-bottom: 20px;
-        }
-
-        .titulo-tabela {
-          font-size: 16px;
-          margin-bottom: 12px;
-        }
-
-        .barra-de-pesquisa input {
-          padding: 8px 12px;
-          font-size: 14px;
-        }
-
-        .dataframe {
-          font-size: 10px;
-        }
-
-        .dataframe th,
-        .dataframe td {
-          padding: 6px 4px;
-          font-size: 10px;
-        }
-
-        .dataframe th {
-          font-size: 11px;
-        }
-
-        /* Em telas muito pequenas, permitir quebra de linha nos cabeçalhos */
-        .dataframe th {
-          white-space: normal;
-          line-height: 1.2;
-        }
-      }
-
-      /* Melhorias para acessibilidade e UX */
-      @media (prefers-reduced-motion: reduce) {
-        * {
-          transition: none !important;
-          animation: none !important;
-        }
-      }
-
-      /* Melhor contraste para texto pequeno */
-      @media (max-width: 768px) {
-        .dataframe td {
-          color: #222;
-        }
-
-        .dataframe th {
-          color: #000;
-        }
-      }
-    </style>
-  </head>
-  <body>
+</head>
+<body>
     <div class="wrapper">
-      <nav class="topnav">
-        <div class="logo">
-          <a href="#" class="active">EQUIPE IBM BRADESCO</a>
-        </div>
-        <div class="nav-links">
-          <a href="/" class="nav-btn home-btn"> UPLOUD </a>
-        </div>
-      </nav>
+        <nav class="topnav">
+            <div class="logo">
+                <a href="#" class="active">EQUIPE IBM BRADESCO</a>
+            </div>
+            <div class="nav-actions">
+                <a href="/" class="btn-secondary">
+                    <i data-lucide="upload"></i>
+                    UPLOAD
+                </a>
+            </div>
+        </nav>
 
-      <div class="tabela-container">
-        <!-- <div th:if="${sucesso}" class="alert alert-success">
+        <div class="container">
+            <!-- Mensagem de Sucesso -->
+            <div th:if="${sucesso}" class="success-message">
+                <i data-lucide="check-circle"></i>
                 Planilhas processadas com sucesso!
-            </div>-->
-        <div th:if="${tabelaResumoHoras != null}">
-          <h2 class="titulo-tabela">TABELA RESUMO DE HORAS</h2>
-          <table class="dataframe">
-            <thead>
-              <tr>
-                <th>NOME COMPLETO</th>
-                <th>HORAS TOTAIS JIRA</th>
-                <th>HORAS TOTAIS CLAIM</th>
-                <th>DIFERENÇA</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr th:each="linha : ${tabelaResumoHoras}">
-                <td th:text="${linha.nome}"></td>
-                <td
-                  th:text="${#numbers.formatDecimal(linha.horasJira, 1, 2)}"
-                ></td>
-                <td
-                  th:text="${#numbers.formatDecimal(linha.horasClaim, 1, 2)}"
-                ></td>
-                <td
-                  th:text="${#numbers.formatDecimal(linha.diferenca, 1, 2)}"
-                ></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+            </div>
 
-      <!-- Resultados Planilha JIRA -->
-      <div class="tabela-container">
-        <div class="linha-titulo-pesquisa">
-          <h2 class="titulo-tabela">
-            Planilha JIRA - Usuários (Colunas Filtradas)
-          </h2>
-        </div>
-        <p>
-          Total de registros: <span th:text="${#lists.size(usuarios)}"></span>
-        </p>
+            <!-- Tabela Resumo de Horas -->
+            <div th:if="${tabelaResumoHoras != null}" class="tabela-container">
+                <div class="tabela-header">
+                    <h2 class="titulo-tabela">TABELA RESUMO DE HORAS</h2>
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-color jira"></div>
+                            <span>Horas JIRA</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color claim"></div>
+                            <span>Horas CLAIM</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color diferenca"></div>
+                            <span>Diferença</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table class="data-table" id="tabelaResumo">
+                        <thead>
+                            <tr>
+                                <th>NOME COMPLETO</th>
+                                <th>HORAS TOTAIS JIRA</th>
+                                <th>HORAS TOTAIS CLAIM</th>
+                                <th>DIFERENÇA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="linha : ${tabelaResumoHoras}">
+                                <td th:text="${linha.nome}"></td>
+                                <td th:text="${#numbers.formatDecimal(linha.horasJira, 1, 2)}"></td>
+                                <td th:text="${#numbers.formatDecimal(linha.horasClaim, 1, 2)}"></td>
+                                <td th:text="${#numbers.formatDecimal(linha.diferenca, 1, 2)}" 
+                                    th:class="${linha.diferenca != 0 ? 'diferenca' : ''}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-        <div class="tabela-scroll">
-          <table id="tabelaUsuarios" class="dataframe">
-            <thead>
-              <tr>
-                <th
-                  th:each="header : ${usuariosCabecalhos}"
-                  th:text="${header}"
-                ></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr th:each="usuario : ${usuarios}">
-                <td
-                  th:each="header : ${usuariosCabecalhos}"
-                  th:text="${usuario.dados.get(header)}"
-                ></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+            <!-- Resultados Planilha JIRA -->
+            <div class="tabela-container">
+                <div class="tabela-header">
+                    <h2 class="titulo-tabela">Planilha JIRA - Usuários (Colunas Filtradas)</h2>
+                    <div class="tabela-controls">
+                        <input type="text" class="search-input" id="searchJira" placeholder="Buscar na tabela JIRA...">
+                        <button class="btn-secondary" onclick="exportTable('tabelaUsuarios', 'JIRA_Usuarios')">
+                            <i data-lucide="download"></i>
+                            Exportar
+                        </button>
+                    </div>
+                </div>
+                <p style="padding: 0 2rem;">
+                    Total de registros: <span th:text="${#lists.size(usuarios)}"></span>
+                </p>
 
-      <!-- Resultados Planilha CLAIM -->
-      <div class="tabela-container">
-        <div class="linha-titulo-pesquisa">
-          <h2 class="titulo-tabela">
-            Planilha CLAIM - Dados Filtrados (STATUS = ACTIVED)
-          </h2>
-        </div>
-        <p>
-          Registros que batem com Planilha JIRA:
-          <span th:text="${#lists.size(claimItems)}"></span>
-        </p>
+                <div class="table-wrapper table-scrollable">
+                    <table id="tabelaUsuarios" class="data-table detailed-table">
+                        <thead>
+                            <tr>
+                                <th th:each="header : ${usuariosCabecalhos}" 
+                                    th:text="${header}"
+                                    th:class="${headerStat.first ? 'sticky-col' : ''}"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="usuario : ${usuarios}" class="linha-jira">
+                                <td th:each="header : ${usuariosCabecalhos}"
+                                    th:text="${usuario.dados.get(header)}"
+                                    th:class="${headerStat.first ? 'sticky-col' : ''}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-        <div class="tabela-scroll">
-          <table id="tabelaClaim" class="dataframe">
-            <thead>
-              <tr>
-                <th
-                  th:each="header : ${claimCabecalhos}"
-                  th:text="${header}"
-                ></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr th:each="item : ${claimItems}">
-                <td
-                  th:each="header : ${claimCabecalhos}"
-                  th:text="${item.dados.get(header)}"
-                ></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+            <!-- Resultados Planilha CLAIM -->
+            <div class="tabela-container">
+                <div class="tabela-header">
+                    <h2 class="titulo-tabela">Planilha CLAIM - Dados Filtrados (STATUS = ACTIVE)</h2>
+                    <div class="tabela-controls">
+                        <input type="text" class="search-input" id="searchClaim" placeholder="Buscar na tabela CLAIM...">
+                        <button class="btn-secondary" onclick="exportTable('tabelaClaim', 'CLAIM_Dados')">
+                            <i data-lucide="download"></i>
+                            Exportar
+                        </button>
+                    </div>
+                </div>
+                <p style="padding: 0 2rem;">
+                    Registros que batem com Planilha JIRA: <span th:text="${#lists.size(claimItems)}"></span>
+                </p>
 
-      <div
-        th:if="${#lists.isEmpty(usuarios) and #lists.isEmpty(claimItems)}"
-        class="tabela-container"
-      >
-        Nenhum dado foi encontrado nas planilhas fornecidas.
-      </div>
+                <div class="table-wrapper table-scrollable">
+                    <table id="tabelaClaim" class="data-table detailed-table">
+                        <thead>
+                            <tr>
+                                <th th:each="header : ${claimCabecalhos}" 
+                                    th:text="${header}"
+                                    th:class="${headerStat.first ? 'sticky-col' : ''}"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="item : ${claimItems}" class="linha-claim">
+                                <td th:each="header : ${claimCabecalhos}"
+                                    th:text="${item.dados.get(header)}"
+                                    th:class="${headerStat.first ? 'sticky-col' : ''}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Mensagem quando não há dados -->
+            <div th:if="${#lists.isEmpty(usuarios) and #lists.isEmpty(claimItems)}" class="tabela-container">
+                <div style="padding: 3rem; text-align: center; color: #666;">
+                    <i data-lucide="file-x" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                    <h3>Nenhum dado encontrado</h3>
+                    <p>Nenhum dado foi encontrado nas planilhas fornecidas.</p>
+                    <a href="/" class="btn-primary" style="margin-top: 1rem;">
+                        <i data-lucide="upload"></i>
+                        Fazer novo upload
+                    </a>
+                </div>
+            </div>
+
+            <!-- Estatísticas -->
+            <div class="stats-container" th:if="${usuarios != null and claimItems != null}">
+                <div class="stat-card">
+                    <h3>Total Usuários JIRA</h3>
+                    <span th:text="${#lists.size(usuarios)}">0</span>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Registros CLAIM</h3>
+                    <span th:text="${#lists.size(claimItems)}">0</span>
+                </div>
+                <div class="stat-card" th:if="${tabelaResumoHoras != null}">
+                    <h3>Usuários Analisados</h3>
+                    <span th:text="${#lists.size(tabelaResumoHoras)}">0</span>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <!-- Scripts carregados em ordem específica -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.13.6/js/jquery.dataTables.min.js"></script>
-
-    <!-- BACK-END -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
 
     <script>
-      $(document).ready(function () {
-        $("#tabelaUsuarios").DataTable({
-          language: {
-            url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json",
-          },
-          pageLength: 25,
-          responsive: true,
-          dom: '<"mb-3"B><"d-flex justify-content-between"lf>rtip',
-          buttons: [
-            {
-              extend: "excel",
-              text: "Exportar Excel",
-              className: "btn btn-success",
-              title: "Dados JIRA Filtrados",
-            },
-            {
-              extend: "pdf",
-              text: "Exportar PDF",
-              className: "btn btn-danger",
-              title: "Dados JIRA Filtrados",
-            },
-          ],
+        // Variáveis globais para controle
+        let dataTablesInitialized = false;
+        let tablesReady = {};
+
+        // Função para verificar se todas as dependências estão carregadas
+        function checkDependencies() {
+            return typeof $ !== 'undefined' && 
+                   typeof $.fn.DataTable !== 'undefined' && 
+                   typeof lucide !== 'undefined';
+        }
+
+        // Função para inicializar DataTables com retry
+        function initializeDataTables() {
+            if (!checkDependencies()) {
+                console.log('Aguardando dependências...');
+                setTimeout(initializeDataTables, 500);
+                return;
+            }
+
+            if (dataTablesInitialized) {
+                return;
+            }
+
+            console.log('Inicializando DataTables...');
+
+            // Configuração comum do DataTables
+            const commonConfig = {
+                language: {
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "_MENU_ resultados por página",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    }
+                },
+                pageLength: 25,
+                responsive: true,
+                scrollX: true,
+                scrollCollapse: true,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: "excel",
+                        text: '<i data-lucide="file-spreadsheet"></i> Excel',
+                        className: "btn-secondary dt-button",
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: "pdf", 
+                        text: '<i data-lucide="file-text"></i> PDF',
+                        className: "btn-secondary dt-button",
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    }
+                ]
+            };
+
+            try {
+                // Inicializar tabela de usuários JIRA
+                if ($("#tabelaUsuarios").length > 0) {
+                    const jiraTable = $("#tabelaUsuarios").DataTable({
+                        ...commonConfig,
+                        title: "Dados JIRA Filtrados"
+                    });
+                    tablesReady.jira = jiraTable;
+                    console.log('✓ Tabela JIRA inicializada');
+                }
+
+                // Inicializar tabela CLAIM
+                if ($("#tabelaClaim").length > 0) {
+                    const claimTable = $("#tabelaClaim").DataTable({
+                        ...commonConfig,
+                        title: "Dados CLAIM Filtrados"
+                    });
+                    tablesReady.claim = claimTable;
+                    console.log('✓ Tabela CLAIM inicializada');
+                }
+
+                // Inicializar tabela de resumo
+                if ($("#tabelaResumo").length > 0) {
+                    const resumoTable = $("#tabelaResumo").DataTable({
+                        ...commonConfig,
+                        title: "Resumo de Horas",
+                        pageLength: 10
+                    });
+                    tablesReady.resumo = resumoTable;
+                    console.log('✓ Tabela Resumo inicializada');
+                }
+
+                dataTablesInitialized = true;
+                console.log('✓ Todas as DataTables inicializadas com sucesso');
+
+                // Configurar busca personalizada após inicialização
+                setupCustomSearches();
+
+                // Inicializar ícones Lucide após tudo carregar
+                setTimeout(() => {
+                    if (typeof lucide !== 'undefined') {
+                        lucide.createIcons();
+                    }
+                }, 100);
+
+            } catch (error) {
+                console.error('Erro ao inicializar DataTables:', error);
+                // Tentar novamente após um tempo
+                setTimeout(initializeDataTables, 1000);
+            }
+        }
+
+        // Função para configurar buscas personalizadas
+        function setupCustomSearches() {
+            // Busca para tabela JIRA
+            if (tablesReady.jira) {
+                $("#searchJira").on('keyup', function() {
+                    tablesReady.jira.search(this.value).draw();
+                });
+                console.log('✓ Busca JIRA configurada');
+            }
+
+            // Busca para tabela CLAIM
+            if (tablesReady.claim) {
+                $("#searchClaim").on('keyup', function() {
+                    tablesReady.claim.search(this.value).draw();
+                });
+                console.log('✓ Busca CLAIM configurada');
+            }
+        }
+
+        // Função de exportação melhorada
+        function exportTable(tableId, filename) {
+            try {
+                let table = null;
+                
+                switch(tableId) {
+                    case 'tabelaUsuarios':
+                        table = tablesReady.jira;
+                        break;
+                    case 'tabelaClaim':
+                        table = tablesReady.claim;
+                        break;
+                    case 'tabelaResumo':
+                        table = tablesReady.resumo;
+                        break;
+                }
+
+                if (table) {
+                    // Trigger do botão Excel
+                    table.button('.buttons-excel').trigger();
+                    console.log(`Exportando tabela: ${filename}`);
+                } else {
+                    console.error(`Tabela ${tableId} não encontrada ou não inicializada`);
+                }
+            } catch (error) {
+                console.error(`Erro ao exportar tabela ${tableId}:`, error);
+                alert('Erro ao exportar tabela. Tente novamente.');
+            }
+        }
+
+        // Tornar função disponível globalmente
+        window.exportTable = exportTable;
+
+        // Inicializar quando DOM estiver pronto
+        $(document).ready(function() {
+            console.log('DOM pronto, iniciando verificação de dependências...');
+            initializeDataTables();
         });
 
-        $("#tabelaClaim").DataTable({
-          language: {
-            url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json",
-          },
-          pageLength: 25,
-          responsive: true,
-          dom: '<"mb-3"B><"d-flex justify-content-between"lf>rtip',
-          buttons: [
-            {
-              extend: "excel",
-              text: "Exportar Excel",
-              className: "btn btn-success",
-              title: "Dados CLAIM Filtrados",
-            },
-            {
-              extend: "pdf",
-              text: "Exportar PDF",
-              className: "btn btn-danger",
-              title: "Dados CLAIM Filtrados",
-            },
-          ],
+        // Fallback para caso o jQuery não carregue
+        document.addEventListener('DOMContentLoaded', function() {
+            // Aguardar um pouco para garantir que os scripts carregaram
+            setTimeout(() => {
+                if (!dataTablesInitialized) {
+                    console.log('Tentativa de inicialização via DOMContentLoaded...');
+                    initializeDataTables();
+                }
+            }, 1000);
         });
-      });
+
+        // Event listener adicional para quando a página carregar completamente
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                if (!dataTablesInitialized) {
+                    console.log('Tentativa final de inicialização...');
+                    initializeDataTables();
+                }
+            }, 1500);
+        });
     </script>
-  </body>
+</body>
 </html>
